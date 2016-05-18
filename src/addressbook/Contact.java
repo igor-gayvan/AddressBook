@@ -5,19 +5,25 @@
  */
 package addressbook;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Scanner;
+
 /**
  *
  * @author Igor Gayvan
  */
 public class Contact {
 
-    private int id;
+    private long id;
     private String nameFull;
     private String phone;
     private String email;
     private String skype;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -57,6 +63,10 @@ public class Contact {
         this.skype = skype;
     }
 
+    public Contact() {
+
+    }
+
     public Contact(String nameFull, String phone, String email, String skype) {
         this.nameFull = nameFull;
         this.phone = phone;
@@ -64,4 +74,25 @@ public class Contact {
         this.skype = skype;
     }
 
+    public void saveContact() throws FileNotFoundException, IOException {
+        this.id = (new Date()).getTime();
+
+        String fileName = "./data/" + String.valueOf(this.id);
+
+        try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
+            fos.write(String.valueOf(this.id).getBytes());
+            fos.write('\n');
+            fos.write(this.nameFull.getBytes());
+            fos.write('\n');
+            fos.write(this.phone.getBytes());
+            fos.write('\n');
+            fos.write(this.email.getBytes());
+            fos.write('\n');
+            fos.write(this.skype.getBytes());
+            fos.write('\n');
+        } catch (IOException ex) {
+            System.out.println("Невозможно создать файл контакта");
+        }
+
+    }
 }

@@ -20,6 +20,8 @@ public class Console {
 
     private List<ActiontListener> AddressBookListeners;
 
+    private String modeWorking = "CHOICE_MODE";
+
     public Console(InputStream inputStream) {
         this.scanner = new Scanner(inputStream);
 
@@ -30,33 +32,45 @@ public class Console {
         AddressBookListeners.add(ActiontListener);
     }
 
+    public String getModeWorking() {
+        return modeWorking;
+    }
+
+    public void setModeWorking(String modeWorking) {
+        this.modeWorking = modeWorking;
+    }
+
     public void working() {
         while (true) {
             String input = scanner.nextLine();
 
-            switch (input.toLowerCase().trim()) {
-                case "0":
-                    for (ActiontListener addressBookListeners : AddressBookListeners) {
-                        addressBookListeners.exitAction();
+            switch (this.getModeWorking()) {
+                case "CHOICE_MODE":
+                    switch (input.toLowerCase().trim()) {
+                        case "0":
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.exitAction();
+                            }
+                            break;
+                        case "1":
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.showListContacts();
+                            }
+                            break;
+                        case "2":
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.addContactAction();
+                            }
+                            this.setModeWorking("ADD_CONTACT");
+                            break;
+                        case "3":
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.showContact();
+                            }
+                            break;
+                        default:
+                            System.out.println("Make your choice");
                     }
-                    break;
-                case "1":
-                    for (ActiontListener addressBookListeners : AddressBookListeners) {
-                        addressBookListeners.showListContacts();
-                    }
-                    break;
-                case "2":
-                    for (ActiontListener addressBookListeners : AddressBookListeners) {
-                        addressBookListeners.addContactAction();
-                    }
-                    break;
-                case "3":
-                    for (ActiontListener addressBookListeners : AddressBookListeners) {
-                        addressBookListeners.showContact();
-                    }
-                    break;
-                default:
-                    System.out.println("Make your choice");
             }
         }
     }
