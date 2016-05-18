@@ -16,12 +16,25 @@ public class AddressBook {
      */
     public static void main(String[] args) {
         Console console = new Console(System.in);
-        console.addExitListener(new ActiontListener() {
+
+        console.addListener(new ActiontListener() {
             @Override
             public void exitAction() {
                 System.exit(0);
             }
+
+            @Override
+            public void addContactAction() {
+                System.exit(0);
+            }
         });
+
+        System.out.println("1 - show list of contacts");
+        System.out.println("2 - add new contact");
+        System.out.println("3 - show information about contact");
+        System.out.println("0 - exit");
+        System.out.print("Your choice? ");
+
         console.working();
     }
 

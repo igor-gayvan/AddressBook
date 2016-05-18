@@ -12,5 +12,7 @@ package addressbook;
 public interface ActiontListener {
 
     public void exitAction();
+    
+    public void addContactAction();
 
 }
