@@ -18,19 +18,16 @@ public class Console {
 
     private Scanner scanner;
 
-    private List<ActiontListener> exitListeners;
-    private List<ActiontListener> addContactListeners;
+    private List<ActiontListener> AddressBookListeners;
 
     public Console(InputStream inputStream) {
         this.scanner = new Scanner(inputStream);
 
-        this.exitListeners = new ArrayList<>();
-        this.addContactListeners = new ArrayList<>();
+        this.AddressBookListeners = new ArrayList<>();
     }
 
     public void addListener(ActiontListener ActiontListener) {
-        exitListeners.add(ActiontListener);
-        addContactListeners.add(ActiontListener);
+        AddressBookListeners.add(ActiontListener);
     }
 
     public void working() {
@@ -39,15 +36,27 @@ public class Console {
 
             switch (input.toLowerCase().trim()) {
                 case "0":
-                    for (ActiontListener exitListener : exitListeners) {
-                        exitListener.exitAction();
+                    for (ActiontListener addressBookListeners : AddressBookListeners) {
+                        addressBookListeners.exitAction();
+                    }
+                    break;
+                case "1":
+                    for (ActiontListener addressBookListeners : AddressBookListeners) {
+                        addressBookListeners.showListContacts();
                     }
                     break;
                 case "2":
-                    for (ActiontListener addContactListener : addContactListeners) {
-                        addContactListener.addContactAction();
+                    for (ActiontListener addressBookListeners : AddressBookListeners) {
+                        addressBookListeners.addContactAction();
                     }
                     break;
+                case "3":
+                    for (ActiontListener addressBookListeners : AddressBookListeners) {
+                        addressBookListeners.showContact();
+                    }
+                    break;
+                default:
+                    System.out.println("Make your choice");
             }
         }
     }

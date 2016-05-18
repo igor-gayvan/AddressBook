@@ -14,5 +14,9 @@ public interface ActiontListener {
     public void exitAction();
     
     public void addContactAction();
+    
+    public void showListContacts();
+    
+    public void showContact();
 
 }

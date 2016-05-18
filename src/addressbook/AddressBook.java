@@ -27,6 +27,16 @@ public class AddressBook {
             public void addContactAction() {
                 System.exit(0);
             }
+
+            @Override
+            public void showListContacts() {
+                System.exit(0);
+            }
+
+            @Override
+            public void showContact() {
+                System.exit(0);
+            }
         });
 
         System.out.println("1 - show list of contacts");
