@@ -71,6 +71,9 @@ public class Console {
                         default:
                             System.out.println("Make your choice");
                     }
+                case "ADD_CONTACT": {
+                    System.out.println("Input contact's data:");
+                }
             }
         }
     }

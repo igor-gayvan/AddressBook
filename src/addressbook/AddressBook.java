@@ -25,7 +25,8 @@ public class AddressBook {
 
             @Override
             public void addContactAction() {
-                System.exit(0);
+                Contact.inputContact();
+                //System.exit(0);
             }
 
             @Override

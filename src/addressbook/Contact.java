@@ -93,6 +93,11 @@ public class Contact {
         } catch (IOException ex) {
             System.out.println("Невозможно создать файл контакта");
         }
+    }
 
+    public static void inputContact() {
+//        Contact cn = new Contact();
+
+        System.out.println("Input full name:");
     }
 }
