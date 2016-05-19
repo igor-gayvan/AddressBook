@@ -5,7 +5,9 @@
  */
 package addressbook;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -89,7 +91,7 @@ public class Contact {
     public void showPromptInputContact() {
         if (currentInputField == null) {
             currentInputField = "nameFull";
-            System.out.println("Input contact's data:");
+            System.out.println("\nInput contact's data:");
         }
 
         switch (currentInputField) {
@@ -151,11 +153,44 @@ public class Contact {
 
             System.out.printf("Contact %s save!%n%n", id);
         } catch (IOException ex) {
-            System.out.println("Невозможно создать файл контакта");
+            System.err.println("Невозможно создать файл контакта");
         }
     }
 
-    public void showListContact() {
+    public void showListContact() throws FileNotFoundException, IOException {
 
+        File f = new File(FOLDER_FOR_CONTACT); // current directory
+
+        System.out.println("\nContact's list: ");
+
+        File[] files = f.listFiles();
+        for (File file : files) {
+            FileInputStream fis = new FileInputStream(file);
+
+            int i = 0;
+            int cntLine = 0;
+            String nameFull = "";
+
+            while (fis.available() > 0) {
+
+                int read = fis.read();
+                if ((cntLine == 1)
+                        && (read != 10)) {
+                    nameFull = nameFull + (char) read;
+                }
+                if (read == 10) {
+                    cntLine++;
+                }
+
+                if (cntLine == 2) {
+                    break;
+                }
+            }
+
+            fis.close();
+            System.out.printf("Full name: %s%n", nameFull);
+        }
+
+        System.out.println();
     }
 }
