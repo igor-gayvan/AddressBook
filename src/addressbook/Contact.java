@@ -5,6 +5,7 @@
  */
 package addressbook;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -86,7 +87,8 @@ public class Contact {
     public void saveContact() {
         id = (new Date()).getTime();
 
-        String fileName = "d:\\Codefire_projects\\AddressBook\\data\\" + String.valueOf(id);
+        new File("./data").mkdir();
+        String fileName = "./data/" + String.valueOf(id);
 
         try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
             fos.write(String.valueOf(this.id).getBytes());
@@ -99,8 +101,9 @@ public class Contact {
             fos.write('\n');
             fos.write(this.skype.getBytes());
             fos.write('\n');
-            
-            System.out.printf("Contact %s save!%n%n",id);
+            fos.close();
+
+            System.out.printf("Contact %s save!%n%n", id);
         } catch (IOException ex) {
             System.out.println("Невозможно создать файл контакта");
         }
@@ -144,8 +147,8 @@ public class Contact {
                 break;
             case "skype":
                 skype = currentFieldValue;
-                saveContact();
                 currentInputField = null;
+                saveContact();
                 break;
         }
     }
