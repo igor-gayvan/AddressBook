@@ -45,7 +45,7 @@ public class AddressBook {
 
             @Override
             public void showListContactsAction() {
-                System.exit(0);
+                contact.showListContact();
             }
 
             @Override

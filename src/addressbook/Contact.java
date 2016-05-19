@@ -23,6 +23,8 @@ public class Contact {
     private String email;
     private String skype;
 
+    private static final String FOLDER_FOR_CONTACT = "./data";
+
     private String currentInputField;
 
     public long getId() {
@@ -84,31 +86,6 @@ public class Contact {
         this.skype = skype;
     }
 
-    public void saveContact() {
-        id = (new Date()).getTime();
-
-        new File("./data").mkdir();
-        String fileName = "./data/" + String.valueOf(id);
-
-        try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
-            fos.write(String.valueOf(this.id).getBytes());
-            fos.write('\n');
-            fos.write(this.nameFull.getBytes());
-            fos.write('\n');
-            fos.write(this.phone.getBytes());
-            fos.write('\n');
-            fos.write(this.email.getBytes());
-            fos.write('\n');
-            fos.write(this.skype.getBytes());
-            fos.write('\n');
-            fos.close();
-
-            System.out.printf("Contact %s save!%n%n", id);
-        } catch (IOException ex) {
-            System.out.println("Невозможно создать файл контакта");
-        }
-    }
-
     public void showPromptInputContact() {
         if (currentInputField == null) {
             currentInputField = "nameFull";
@@ -151,5 +128,34 @@ public class Contact {
                 saveContact();
                 break;
         }
+    }
+
+    public void saveContact() {
+        id = (new Date()).getTime();
+
+        new File(FOLDER_FOR_CONTACT).mkdir();
+        String fileName = FOLDER_FOR_CONTACT + "/" + String.valueOf(id);
+
+        try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
+            fos.write(String.valueOf(this.id).getBytes());
+            fos.write('\n');
+            fos.write(this.nameFull.getBytes());
+            fos.write('\n');
+            fos.write(this.phone.getBytes());
+            fos.write('\n');
+            fos.write(this.email.getBytes());
+            fos.write('\n');
+            fos.write(this.skype.getBytes());
+            fos.write('\n');
+            fos.close();
+
+            System.out.printf("Contact %s save!%n%n", id);
+        } catch (IOException ex) {
+            System.out.println("Невозможно создать файл контакта");
+        }
+    }
+
+    public void showListContact() {
+
     }
 }
