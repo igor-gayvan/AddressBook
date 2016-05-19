@@ -18,36 +18,89 @@ public class Console {
 
     private Scanner scanner;
 
-    private List<ActiontListener> exitListeners;
-    private List<ActiontListener> addContactListeners;
+    private List<ActiontListener> AddressBookListeners;
+
+    private String modeWorking = "CHOICE_MODE";
+
+    private String inputText;
 
     public Console(InputStream inputStream) {
         this.scanner = new Scanner(inputStream);
 
-        this.exitListeners = new ArrayList<>();
-        this.addContactListeners = new ArrayList<>();
+        this.AddressBookListeners = new ArrayList<>();
     }
 
     public void addListener(ActiontListener ActiontListener) {
-        exitListeners.add(ActiontListener);
-        addContactListeners.add(ActiontListener);
+        AddressBookListeners.add(ActiontListener);
+    }
+
+    public String getInputText() {
+        return inputText;
+    }
+
+    public void setInputText(String inputText) {
+        this.inputText = inputText;
+    }
+
+    public String getModeWorking() {
+        return modeWorking;
+    }
+
+    /**
+     *
+     * @param modeWorking ADD_CONTACT - добавление, CHOICE_MODE - главное меню
+     *
+     */
+    public void setModeWorking(String modeWorking) {
+        this.modeWorking = modeWorking;
     }
 
     public void working() {
         while (true) {
-            String input = scanner.nextLine();
+            if (modeWorking == "CHOICE_MODE") {
+                System.out.println("1 - show list of contacts");
+                System.out.println("2 - add new contact");
+                System.out.println("3 - show information about contact");
+                System.out.println("0 - exit");
+                System.out.print("Your choice? ");
+            }
 
-            switch (input.toLowerCase().trim()) {
-                case "0":
-                    for (ActiontListener exitListener : exitListeners) {
-                        exitListener.exitAction();
+            inputText = scanner.nextLine().trim();
+
+            switch (modeWorking) {
+                case "ADD_CONTACT": {
+                    for (ActiontListener addressBookListeners : AddressBookListeners) {
+                        addressBookListeners.addContactAction();
                     }
                     break;
-                case "2":
-                    for (ActiontListener addContactListener : addContactListeners) {
-                        addContactListener.addContactAction();
+                }
+                case "CHOICE_MODE":
+                    switch (inputText.toLowerCase().trim()) {
+                        case "0":
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.exitAction();
+                            }
+                            break;
+                        case "1":
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.showListContactsAction();
+                            }
+                            break;
+                        case "2":
+                            setModeWorking("ADD_CONTACT");
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.addShowContactAction();
+                            }
+                            break;
+                        case "3":
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.showContactAction();
+                            }
+                            break;
+                        default:
+                            System.out.println("Make your choice");
                     }
-                    break;
+
             }
         }
     }

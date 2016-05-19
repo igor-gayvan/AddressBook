@@ -5,19 +5,31 @@
  */
 package addressbook;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
+
 /**
  *
  * @author Igor Gayvan
  */
 public class Contact {
 
-    private int id;
+    private long id;
     private String nameFull;
     private String phone;
     private String email;
     private String skype;
 
-    public int getId() {
+    private static final String FOLDER_FOR_CONTACT = "./data";
+
+    private String currentInputField;
+
+    public long getId() {
         return id;
     }
 
@@ -57,6 +69,18 @@ public class Contact {
         this.skype = skype;
     }
 
+    public String getCurrentInputField() {
+        return currentInputField;
+    }
+
+    public void setCurrentInputField(String currentInputField) {
+        this.currentInputField = currentInputField;
+    }
+
+    public Contact() {
+
+    }
+
     public Contact(String nameFull, String phone, String email, String skype) {
         this.nameFull = nameFull;
         this.phone = phone;
@@ -64,4 +88,109 @@ public class Contact {
         this.skype = skype;
     }
 
+    public void showPromptInputContact() {
+        if (currentInputField == null) {
+            currentInputField = "nameFull";
+            System.out.println("\nInput contact's data:");
+        }
+
+        switch (currentInputField) {
+            case "nameFull":
+                System.out.println("Input full name:");
+                break;
+            case "phone":
+                System.out.println("Input phone:");
+                break;
+            case "email":
+                System.out.println("Input email:");
+                break;
+            case "skype":
+                System.out.println("Input skype:");
+                break;
+        }
+    }
+
+    public void inputContact(String currentFieldValue) {
+        switch (currentInputField) {
+            case "nameFull":
+                nameFull = currentFieldValue;
+                currentInputField = "phone";
+                break;
+            case "phone":
+                phone = currentFieldValue;
+                currentInputField = "email";
+                break;
+            case "email":
+                email = currentFieldValue;
+                currentInputField = "skype";
+                break;
+            case "skype":
+                skype = currentFieldValue;
+                currentInputField = null;
+                saveContact();
+                break;
+        }
+    }
+
+    public void saveContact() {
+        id = (new Date()).getTime();
+
+        new File(FOLDER_FOR_CONTACT).mkdir();
+        String fileName = FOLDER_FOR_CONTACT + "/" + String.valueOf(id);
+
+        try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
+            fos.write(String.valueOf(this.id).getBytes());
+            fos.write('\n');
+            fos.write(this.nameFull.getBytes());
+            fos.write('\n');
+            fos.write(this.phone.getBytes());
+            fos.write('\n');
+            fos.write(this.email.getBytes());
+            fos.write('\n');
+            fos.write(this.skype.getBytes());
+            fos.write('\n');
+            fos.close();
+
+            System.out.printf("Contact %s save!%n%n", id);
+        } catch (IOException ex) {
+            System.err.println("Невозможно создать файл контакта");
+        }
+    }
+
+    public void showListContact() throws FileNotFoundException, IOException {
+
+        File f = new File(FOLDER_FOR_CONTACT); // current directory
+
+        System.out.println("\nContact's list: ");
+
+        File[] files = f.listFiles();
+        for (File file : files) {
+            FileInputStream fis = new FileInputStream(file);
+
+            int i = 0;
+            int cntLine = 0;
+            String nameFull = "";
+
+            while (fis.available() > 0) {
+
+                int read = fis.read();
+                if ((cntLine == 1)
+                        && (read != 10)) {
+                    nameFull = nameFull + (char) read;
+                }
+                if (read == 10) {
+                    cntLine++;
+                }
+
+                if (cntLine == 2) {
+                    break;
+                }
+            }
+
+            fis.close();
+            System.out.printf("Full name: %s%n", nameFull);
+        }
+
+        System.out.println();
+    }
 }

@@ -17,6 +17,8 @@ public class AddressBook {
     public static void main(String[] args) {
         Console console = new Console(System.in);
 
+        Contact contact = new Contact();
+
         console.addListener(new ActiontListener() {
             @Override
             public void exitAction() {
@@ -24,16 +26,33 @@ public class AddressBook {
             }
 
             @Override
+            public void addShowContactAction() {
+                contact.showPromptInputContact();
+            }
+
+            @Override
             public void addContactAction() {
+                contact.inputContact(console.getInputText());
+
+                if (contact.getCurrentInputField() == null) {
+                    console.setModeWorking("CHOICE_MODE");
+
+                } else {
+                    contact.showPromptInputContact();
+                }
+
+            }
+
+            @Override
+            public void showListContactsAction() {
+                contact.showListContact();
+            }
+
+            @Override
+            public void showContactAction() {
                 System.exit(0);
             }
         });
-
-        System.out.println("1 - show list of contacts");
-        System.out.println("2 - add new contact");
-        System.out.println("3 - show information about contact");
-        System.out.println("0 - exit");
-        System.out.print("Your choice? ");
 
         console.working();
     }
