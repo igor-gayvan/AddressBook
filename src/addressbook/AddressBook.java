@@ -5,6 +5,10 @@
  */
 package addressbook;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Igor Gayvan
@@ -45,7 +49,12 @@ public class AddressBook {
 
             @Override
             public void showListContactsAction() {
-                contact.showListContact();
+                try {
+                    contact.showListContact();
+                } catch (IOException ex) {
+                    Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
+              
             }
 
             @Override

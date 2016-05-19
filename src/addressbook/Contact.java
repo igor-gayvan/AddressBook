@@ -174,8 +174,7 @@ public class Contact {
             while (fis.available() > 0) {
 
                 int read = fis.read();
-                if ((cntLine == 1)
-                        && (read != 10)) {
+                if ((cntLine == 1)) {
                     nameFull = nameFull + (char) read;
                 }
                 if (read == 10) {
@@ -188,7 +187,7 @@ public class Contact {
             }
 
             fis.close();
-            System.out.printf("Full name: %s%n", nameFull);
+            System.out.printf("Full name: %s", nameFull);
         }
 
         System.out.println();
