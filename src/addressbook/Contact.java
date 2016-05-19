@@ -83,10 +83,10 @@ public class Contact {
         this.skype = skype;
     }
 
-    public void saveContact() throws FileNotFoundException, IOException {
-        this.id = (new Date()).getTime();
+    public void saveContact() {
+        id = (new Date()).getTime();
 
-        String fileName = "./data/" + String.valueOf(this.id);
+        String fileName = "d:\\Codefire_projects\\AddressBook\\data\\" + String.valueOf(id);
 
         try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
             fos.write(String.valueOf(this.id).getBytes());
@@ -99,6 +99,8 @@ public class Contact {
             fos.write('\n');
             fos.write(this.skype.getBytes());
             fos.write('\n');
+            
+            System.out.printf("Contact %s save!%n%n",id);
         } catch (IOException ex) {
             System.out.println("Невозможно создать файл контакта");
         }
@@ -107,6 +109,7 @@ public class Contact {
     public void showPromptInputContact() {
         if (currentInputField == null) {
             currentInputField = "nameFull";
+            System.out.println("Input contact's data:");
         }
 
         switch (currentInputField) {
@@ -122,26 +125,28 @@ public class Contact {
             case "skype":
                 System.out.println("Input skype:");
                 break;
-
         }
-        
-public void showPromptInputContact() {
-       
+    }
+
+    public void inputContact(String currentFieldValue) {
         switch (currentInputField) {
             case "nameFull":
-                nameFull.
+                nameFull = currentFieldValue;
+                currentInputField = "phone";
                 break;
             case "phone":
-                System.out.println("Input phone:");
+                phone = currentFieldValue;
+                currentInputField = "email";
                 break;
             case "email":
-                System.out.println("Input email:");
+                email = currentFieldValue;
+                currentInputField = "skype";
                 break;
             case "skype":
-                System.out.println("Input skype:");
+                skype = currentFieldValue;
+                saveContact();
+                currentInputField = null;
                 break;
-
-        }        
-
+        }
     }
 }

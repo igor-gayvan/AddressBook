@@ -26,9 +26,21 @@ public class AddressBook {
             }
 
             @Override
-            public void addContactAction() {
+            public void addShowContactAction() {
                 contact.showPromptInputContact();
-                contact.inputContact();
+            }
+
+            @Override
+            public void addContactAction() {
+                contact.inputContact(console.getInputText());
+
+                if (contact.getCurrentInputField() == null) {
+                    console.setModeWorking("CHOICE_MODE");
+
+                } else {
+                    contact.showPromptInputContact();
+                }
+
             }
 
             @Override
@@ -41,12 +53,6 @@ public class AddressBook {
                 System.exit(0);
             }
         });
-
-        System.out.println("1 - show list of contacts");
-        System.out.println("2 - add new contact");
-        System.out.println("3 - show information about contact");
-        System.out.println("0 - exit");
-        System.out.print("Your choice? ");
 
         console.working();
     }

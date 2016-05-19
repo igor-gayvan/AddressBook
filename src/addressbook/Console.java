@@ -22,6 +22,8 @@ public class Console {
 
     private String modeWorking = "CHOICE_MODE";
 
+    private String inputText;
+
     public Console(InputStream inputStream) {
         this.scanner = new Scanner(inputStream);
 
@@ -32,21 +34,48 @@ public class Console {
         AddressBookListeners.add(ActiontListener);
     }
 
+    public String getInputText() {
+        return inputText;
+    }
+
+    public void setInputText(String inputText) {
+        this.inputText = inputText;
+    }
+
     public String getModeWorking() {
         return modeWorking;
     }
 
+    /**
+     *
+     * @param modeWorking ADD_CONTACT - добавление, CHOICE_MODE - главное меню
+     *
+     */
     public void setModeWorking(String modeWorking) {
         this.modeWorking = modeWorking;
     }
 
     public void working() {
         while (true) {
-            String input = scanner.nextLine();
+            if (modeWorking == "CHOICE_MODE") {
+                System.out.println("1 - show list of contacts");
+                System.out.println("2 - add new contact");
+                System.out.println("3 - show information about contact");
+                System.out.println("0 - exit");
+                System.out.print("Your choice? ");
+            }
 
-            switch (this.getModeWorking()) {
+            inputText = scanner.nextLine().trim();
+
+            switch (modeWorking) {
+                case "ADD_CONTACT": {
+                    for (ActiontListener addressBookListeners : AddressBookListeners) {
+                        addressBookListeners.addContactAction();
+                    }
+                    break;
+                }
                 case "CHOICE_MODE":
-                    switch (input.toLowerCase().trim()) {
+                    switch (inputText.toLowerCase().trim()) {
                         case "0":
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
                                 addressBookListeners.exitAction();
@@ -58,10 +87,10 @@ public class Console {
                             }
                             break;
                         case "2":
-                            for (ActiontListener addressBookListeners : AddressBookListeners) {
-                                addressBookListeners.addContactAction();
-                            }
                             setModeWorking("ADD_CONTACT");
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.addShowContactAction();
+                            }
                             break;
                         case "3":
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
@@ -71,14 +100,7 @@ public class Console {
                         default:
                             System.out.println("Make your choice");
                     }
-                case "ADD_CONTACT": {
-                    System.out.println("Input contact's data:");
 
-                    for (ActiontListener addressBookListeners : AddressBookListeners) {
-                        addressBookListeners.addContactAction();
-                    }
-                    break;
-                }
             }
         }
     }
