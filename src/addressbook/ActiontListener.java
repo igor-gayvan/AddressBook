@@ -12,11 +12,10 @@ package addressbook;
 public interface ActiontListener {
 
     public void exitAction();
-    
-    public void addContactAction();
-    
-    public void showListContacts();
-    
-    public void showContact();
 
+    public void addContactAction();
+
+    public void showListContactsAction();
+
+    public void showContactAction();
 }

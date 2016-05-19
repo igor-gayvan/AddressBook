@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Scanner;
 
 /**
  *
@@ -22,6 +21,8 @@ public class Contact {
     private String phone;
     private String email;
     private String skype;
+
+    private String currentInputField;
 
     public long getId() {
         return id;
@@ -63,6 +64,14 @@ public class Contact {
         this.skype = skype;
     }
 
+    public String getCurrentInputField() {
+        return currentInputField;
+    }
+
+    public void setCurrentInputField(String currentInputField) {
+        this.currentInputField = currentInputField;
+    }
+
     public Contact() {
 
     }
@@ -95,9 +104,44 @@ public class Contact {
         }
     }
 
-    public static void inputContact() {
-//        Contact cn = new Contact();
+    public void showPromptInputContact() {
+        if (currentInputField == null) {
+            currentInputField = "nameFull";
+        }
 
-        System.out.println("Input full name:");
+        switch (currentInputField) {
+            case "nameFull":
+                System.out.println("Input full name:");
+                break;
+            case "phone":
+                System.out.println("Input phone:");
+                break;
+            case "email":
+                System.out.println("Input email:");
+                break;
+            case "skype":
+                System.out.println("Input skype:");
+                break;
+
+        }
+        
+public void showPromptInputContact() {
+       
+        switch (currentInputField) {
+            case "nameFull":
+                nameFull.
+                break;
+            case "phone":
+                System.out.println("Input phone:");
+                break;
+            case "email":
+                System.out.println("Input email:");
+                break;
+            case "skype":
+                System.out.println("Input skype:");
+                break;
+
+        }        
+
     }
 }

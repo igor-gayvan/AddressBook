@@ -54,18 +54,18 @@ public class Console {
                             break;
                         case "1":
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
-                                addressBookListeners.showListContacts();
+                                addressBookListeners.showListContactsAction();
                             }
                             break;
                         case "2":
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
                                 addressBookListeners.addContactAction();
                             }
-                            this.setModeWorking("ADD_CONTACT");
+                            setModeWorking("ADD_CONTACT");
                             break;
                         case "3":
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
-                                addressBookListeners.showContact();
+                                addressBookListeners.showContactAction();
                             }
                             break;
                         default:
@@ -73,6 +73,11 @@ public class Console {
                     }
                 case "ADD_CONTACT": {
                     System.out.println("Input contact's data:");
+
+                    for (ActiontListener addressBookListeners : AddressBookListeners) {
+                        addressBookListeners.addContactAction();
+                    }
+                    break;
                 }
             }
         }

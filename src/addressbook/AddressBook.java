@@ -17,6 +17,8 @@ public class AddressBook {
     public static void main(String[] args) {
         Console console = new Console(System.in);
 
+        Contact contact = new Contact();
+
         console.addListener(new ActiontListener() {
             @Override
             public void exitAction() {
@@ -25,17 +27,17 @@ public class AddressBook {
 
             @Override
             public void addContactAction() {
-                Contact.inputContact();
-                //System.exit(0);
+                contact.showPromptInputContact();
+                contact.inputContact();
             }
 
             @Override
-            public void showListContacts() {
+            public void showListContactsAction() {
                 System.exit(0);
             }
 
             @Override
-            public void showContact() {
+            public void showContactAction() {
                 System.exit(0);
             }
         });
