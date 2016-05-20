@@ -28,43 +28,45 @@ public class DataSource {
         File f = new File(FOLDER_FOR_CONTACT); // current directory
 
         File[] files = f.listFiles();
-        for (File file : files) {
-            Contact contact = new Contact();
-            FileInputStream fis = new FileInputStream(file);
+        if (files != null) {
+            for (File file : files) {
+                Contact contact = new Contact();
+                FileInputStream fis = new FileInputStream(file);
 
-            int cntLine = 0;
-            String curLine = "";
+                int cntLine = 0;
+                String curLine = "";
 
-            while (fis.available() > 0) {
-                int read = fis.read();
-                if (read == 10) {
-                    switch (cntLine) {
-                        case 0:
-                            contact.setId(curLine);
-                            break;
-                        case 1:
-                            contact.setNameFull(curLine);
-                            break;
-                        case 2:
-                            contact.setPhone(curLine);
-                            break;
-                        case 3:
-                            contact.setEmail(curLine);
-                            break;
-                        case 4:
-                            contact.setSkype(curLine);
-                            break;
+                while (fis.available() > 0) {
+                    int read = fis.read();
+                    if (read == 10) {
+                        switch (cntLine) {
+                            case 0:
+                                contact.setId(curLine);
+                                break;
+                            case 1:
+                                contact.setNameFull(curLine);
+                                break;
+                            case 2:
+                                contact.setPhone(curLine);
+                                break;
+                            case 3:
+                                contact.setEmail(curLine);
+                                break;
+                            case 4:
+                                contact.setSkype(curLine);
+                                break;
+                        }
+
+                        curLine = "";
+                        cntLine++;
+                    } else {
+                        curLine = curLine + (char) read;
                     }
-
-                    curLine = "";
-                    cntLine++;
-                } else {
-                    curLine = curLine + (char) read;
                 }
-            }
 
-            fis.close();
-            contactList.add(contact);
+                fis.close();
+                contactList.add(contact);
+            }
         }
         System.out.println("Finish read data from files\n");
     }
