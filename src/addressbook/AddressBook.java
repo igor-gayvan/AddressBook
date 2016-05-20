@@ -46,7 +46,7 @@ public class AddressBook {
             // Заполняем поля контакта
             @Override
             public void addContactAction() {
-                ShowData.addContact(ds, contactList, contact, console.getInputText());
+                ShowData.showAddContact(ds, contactList, contact, console.getInputText());
 
                 if (contact.getCurrentInputField() == null) {
                     console.setModeWorking("CHOICE_MODE");

@@ -15,14 +15,14 @@ public class ShowData {
 
     public void showListContact(List<Contact> contactList) {
         System.out.println("\nContact's list: ");
-        System.out.println("--------------------------------------------------------------------------------------");
-        System.out.printf("|%10s|%20s|%20s|20s|%20s|%n", "Id", "Full name", "Phone", "Email", "Skype");
-        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------------");
+        System.out.printf("|%14s|%20s|%20s|%20s|%20s|%n", "Id", "Full name", "Phone", "Email", "Skype");
+        System.out.println("---------------------------------------------------------------------------------------------------");
         for (Contact contact : contactList) {
-            System.out.printf("|%10s|%20s|%20s|%20s|%20s|%n", contact.getId(), contact.getNameFull(), contact.getPhone(), contact.getEmail(), contact.getSkype());
+            System.out.printf("|%14s|%-20s|%-20s|%-20s|%-20s|%n", contact.getId(), contact.getNameFull(), contact.getPhone(), contact.getEmail(), contact.getSkype());
         }
 
-        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------------");
         System.out.println("");
     }
 
@@ -38,7 +38,7 @@ public class ShowData {
         }
     }
 
-    public static void addContact(DataSource ds, List<Contact> contactList, Contact contact, String currentFieldValue) {
+    public static void showAddContact(DataSource ds, List<Contact> contactList, Contact contact, String currentFieldValue) {
         switch (contact.getCurrentInputField()) {
             case "nameFull":
                 contact.setNameFull(currentFieldValue);
