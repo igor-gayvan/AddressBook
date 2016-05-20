@@ -21,17 +21,17 @@ public class DataSource {
 
     private static final String FOLDER_FOR_CONTACT = "./data";
 
-    public static void loadContactFromFiles(List<Contact> contactList) throws FileNotFoundException, IOException {
+    public void loadContactFromFiles(List<Contact> contactList) throws FileNotFoundException, IOException {
         System.out.println("Start read data from files...");
         contactList.clear();
-        Contact contact = new Contact();
+
         File f = new File(FOLDER_FOR_CONTACT); // current directory
 
         File[] files = f.listFiles();
         for (File file : files) {
+            Contact contact = new Contact();
             FileInputStream fis = new FileInputStream(file);
 
-            int i = 0;
             int cntLine = 0;
             String curLine = "";
 

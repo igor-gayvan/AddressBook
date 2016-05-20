@@ -5,9 +5,6 @@
  */
 package addressbook;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +16,6 @@ import java.util.logging.Logger;
  * @author Igor Gayvan
  */
 public class AddressBook {
-
-   
 
     /**
      * @param args the command line arguments
@@ -51,7 +46,7 @@ public class AddressBook {
             // Заполняем поля контакта
             @Override
             public void addContactAction() {
-                ShowData.inputContact(contactList,contact,console.getInputText());
+                ShowData.addContact(ds, contactList, contact, console.getInputText());
 
                 if (contact.getCurrentInputField() == null) {
                     console.setModeWorking("CHOICE_MODE");
@@ -70,7 +65,7 @@ public class AddressBook {
             // Показываем приглашения для ввода ID контакта
             @Override
             public void showPromptInputContactIdAction() {
-                contact.showPromptInputContactId();
+                showData.showPromptInputContactId();
             }
 
             // Показываем данные контатка
@@ -79,7 +74,7 @@ public class AddressBook {
                 showData.showContactInfo(contactList, console.getInputText());
                 console.setModeWorking("CHOICE_MODE");
             }
-            
+
             @Override
             public void refreshDataAction() {
                 try {
@@ -92,5 +87,5 @@ public class AddressBook {
         });
 
         console.working();
-    }   
+    }
 }

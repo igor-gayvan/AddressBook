@@ -5,14 +5,6 @@
  */
 package addressbook;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
 /**
  *
  * @author Igor Gayvan
@@ -79,6 +71,10 @@ public class Contact {
 
     }
 
+    public Contact(String id) {
+        this.id = id;
+    }
+
     public Contact(String nameFull, String phone, String email, String skype) {
         this.nameFull = nameFull;
         this.phone = phone;
@@ -86,19 +82,15 @@ public class Contact {
         this.skype = skype;
     }
 
-    public void showPromptInputContactId() {
-        System.out.println("\nInput contact's id:");
-    }
-
     public void showContact() {
-        System.out.println("\nContact's info: ");
+        System.out.println("\nContact's info ");
         System.out.printf("ID: %s%n", this.id);
         System.out.printf("Full name: %s%n", this.nameFull);
         System.out.printf("Phone: %s%n", this.phone);
         System.out.printf("Email: %s%n", this.email);
         System.out.printf("Skype: %s%n", this.skype);
         System.out.println("");
-    }   
+    }
 
     public void showPromptInputContact() {
         if (currentInputField == null) {
@@ -108,16 +100,16 @@ public class Contact {
 
         switch (currentInputField) {
             case "nameFull":
-                System.out.println("Input full name:");
+                System.out.print("Input full name:");
                 break;
             case "phone":
-                System.out.println("Input phone:");
+                System.out.print("Input phone:");
                 break;
             case "email":
-                System.out.println("Input email:");
+                System.out.print("Input email:");
                 break;
             case "skype":
-                System.out.println("Input skype:");
+                System.out.print("Input skype:");
                 break;
         }
     }

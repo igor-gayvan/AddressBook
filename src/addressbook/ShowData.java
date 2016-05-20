@@ -15,16 +15,20 @@ public class ShowData {
 
     public void showListContact(List<Contact> contactList) {
         System.out.println("\nContact's list: ");
-        System.out.println("   Full name    ");
+        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.printf("|%10s|%20s|%20s|20s|%20s|%n", "Id", "Full name", "Phone", "Email", "Skype");
+        System.out.println("--------------------------------------------------------------------------------------");
         for (Contact contact : contactList) {
-            System.out.printf("%s%n", contact.getNameFull());
+            System.out.printf("|%10s|%20s|%20s|%20s|%20s|%n", contact.getId(), contact.getNameFull(), contact.getPhone(), contact.getEmail(), contact.getSkype());
         }
 
-        System.out.println();
+        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.println("");
     }
 
     public void showContactInfo(List<Contact> contactList, String contactId) {
-        System.out.println(contactList.indexOf(contactId));
+        Contact cn = new Contact(contactId);
+        System.out.println(contactList.indexOf(cn));
 
         for (Contact contact : contactList) {
             if (contactId == null || (contactId != null && contact.getId().equals(contactId))) {
@@ -34,7 +38,7 @@ public class ShowData {
         }
     }
 
-    public static void inputContact(List<Contact> contactList, Contact contact, String currentFieldValue) {
+    public static void addContact(DataSource ds, List<Contact> contactList, Contact contact, String currentFieldValue) {
         switch (contact.getCurrentInputField()) {
             case "nameFull":
                 contact.setNameFull(currentFieldValue);
@@ -51,9 +55,13 @@ public class ShowData {
             case "skype":
                 contact.setSkype(currentFieldValue);
                 contact.setCurrentInputField(null);
-                (new DataSource()).saveContact(contactList, contact);
+                ds.saveContact(contactList, contact);
                 break;
         }
+    }
+
+    public void showPromptInputContactId() {
+        System.out.print("\nInput contact's id: ");
     }
 
 }
