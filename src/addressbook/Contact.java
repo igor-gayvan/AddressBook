@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -169,53 +170,8 @@ public class Contact {
                 break;
         }
     }
-
-    public void inputContact(String currentFieldValue) {
-        switch (currentInputField) {
-            case "nameFull":
-                nameFull = currentFieldValue;
-                currentInputField = "phone";
-                break;
-            case "phone":
-                phone = currentFieldValue;
-                currentInputField = "email";
-                break;
-            case "email":
-                email = currentFieldValue;
-                currentInputField = "skype";
-                break;
-            case "skype":
-                skype = currentFieldValue;
-                currentInputField = null;
-                saveContact();
-                break;
-        }
-    }
-
-    public void saveContact() {
-        id = String.valueOf((new Date()).getTime());
-
-        new File(FOLDER_FOR_CONTACT).mkdir();
-        String fileName = FOLDER_FOR_CONTACT + "/" + id;
-
-        try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
-            fos.write(this.id.getBytes());
-            fos.write('\n');
-            fos.write(this.nameFull.getBytes());
-            fos.write('\n');
-            fos.write(this.phone.getBytes());
-            fos.write('\n');
-            fos.write(this.email.getBytes());
-            fos.write('\n');
-            fos.write(this.skype.getBytes());
-            fos.write('\n');
-            fos.close();
-
-            System.out.printf("Contact %s save!%n%n", id);
-        } catch (IOException ex) {
-            System.err.println("Невозможно создать файл контакта");
-        }
-    }
+    
+    
 
    
 }

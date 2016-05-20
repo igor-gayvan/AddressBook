@@ -48,7 +48,8 @@ public class Console {
 
     /**
      *
-     * @param modeWorking ADD_CONTACT - добавление, CHOICE_MODE - главное меню, SHOW_CONTACT - отображение данных о контакте
+     * @param modeWorking ADD_CONTACT - добавление, CHOICE_MODE - главное меню,
+     * SHOW_CONTACT - отображение данных о контакте
      *
      */
     public void setModeWorking(String modeWorking) {
@@ -61,6 +62,7 @@ public class Console {
                 System.out.println("1 - show list of contacts");
                 System.out.println("2 - add new contact");
                 System.out.println("3 - show information about contact");
+                System.out.println("5 - refresh");
                 System.out.println("0 - exit");
                 System.out.print("Your choice? ");
             }
@@ -73,7 +75,7 @@ public class Console {
                         addressBookListeners.showContactAction();
                     }
                     break;
-                }                
+                }
                 case "ADD_CONTACT": {
                     for (ActiontListener addressBookListeners : AddressBookListeners) {
                         addressBookListeners.addContactAction();
@@ -102,6 +104,12 @@ public class Console {
                             setModeWorking("SHOW_CONTACT");
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
                                 addressBookListeners.showPromptInputContactIdAction();
+                            }
+                            break;
+                        case "5":
+                            setModeWorking("REFRESH");
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.refreshDataAction();
                             }
                             break;
                         default:

@@ -32,6 +32,7 @@ public class AddressBook {
         List<Contact> contactList = new ArrayList<>();
 
         DataSource ds = new DataSource();
+        ShowData showData = new ShowData();
         ds.loadContactFromFiles(contactList);
 
         console.addListener(new ActiontListener() {
@@ -50,7 +51,7 @@ public class AddressBook {
             // Заполняем поля контакта
             @Override
             public void addContactAction() {
-                contact.inputContact(console.getInputText());
+                ShowData.inputContact(contactList,contact,console.getInputText());
 
                 if (contact.getCurrentInputField() == null) {
                     console.setModeWorking("CHOICE_MODE");
@@ -63,7 +64,7 @@ public class AddressBook {
             // Показываем список контактов
             @Override
             public void showListContactsAction() {
-                showListContact(contactList);
+                showData.showListContact(contactList);
             }
 
             // Показываем приглашения для ввода ID контакта
@@ -75,7 +76,16 @@ public class AddressBook {
             // Показываем данные контатка
             @Override
             public void showContactAction() {
-                showContactInfo(contactList, console.getInputText());
+                showData.showContactInfo(contactList, console.getInputText());
+                console.setModeWorking("CHOICE_MODE");
+            }
+            
+            public void refreshDataAction() {
+                try {
+                    ds.loadContactFromFiles(contactList);
+                } catch (IOException ex) {
+                    Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 console.setModeWorking("CHOICE_MODE");
             }
         });
@@ -83,25 +93,5 @@ public class AddressBook {
         console.working();
     }
 
-    public static void showListContact(List<Contact> contactList) {
-        System.out.println("\nContact's list: ");
-        System.out.println("   Full name    ");
-        for (Contact contact : contactList) {
-            System.out.printf("%s%n", contact.getNameFull());
-        }
-
-        System.out.println();
-    }
-
-    private static void showContactInfo(List<Contact> contactList, String contactId) {
-        for (Contact contact : contactList) {
-            if (contactId == null || (contactId != null && contact.getId().equals(contactId))) {
-                contact.showContact();
-                break;
-            }
-        }
-    }
-
    
-
 }

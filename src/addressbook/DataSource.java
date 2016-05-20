@@ -8,7 +8,9 @@ package addressbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,9 +18,12 @@ import java.util.List;
  * @author Igor Gayvan
  */
 public class DataSource {
+
     private static final String FOLDER_FOR_CONTACT = "./data";
 
     public static void loadContactFromFiles(List<Contact> contactList) throws FileNotFoundException, IOException {
+        System.out.println("Start read data from files...");
+        contactList.clear();
         Contact contact = new Contact();
         File f = new File(FOLDER_FOR_CONTACT); // current directory
 
@@ -60,6 +65,33 @@ public class DataSource {
 
             fis.close();
             contactList.add(contact);
+        }
+        System.out.println("Finish read data from files\n");
+    }
+
+    public void saveContact(List<Contact> contactList, Contact contact) {
+        contact.setId(String.valueOf((new Date()).getTime()));
+
+        new File(FOLDER_FOR_CONTACT).mkdir();
+        String fileName = FOLDER_FOR_CONTACT + "/" + contact.getId();
+
+        try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
+            fos.write(contact.getId().getBytes());
+            fos.write('\n');
+            fos.write(contact.getNameFull().getBytes());
+            fos.write('\n');
+            fos.write(contact.getPhone().getBytes());
+            fos.write('\n');
+            fos.write(contact.getEmail().getBytes());
+            fos.write('\n');
+            fos.write(contact.getSkype().getBytes());
+            fos.write('\n');
+            fos.close();
+
+            System.out.printf("Contact %s save!%n%n", contact.getId());
+            contactList.add(contact);
+        } catch (IOException ex) {
+            System.err.println("Невозможно создать файл контакта");
         }
     }
 
