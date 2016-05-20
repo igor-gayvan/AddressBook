@@ -80,6 +80,7 @@ public class AddressBook {
                 console.setModeWorking("CHOICE_MODE");
             }
             
+            @Override
             public void refreshDataAction() {
                 try {
                     ds.loadContactFromFiles(contactList);
@@ -91,7 +92,5 @@ public class AddressBook {
         });
 
         console.working();
-    }
-
-   
+    }   
 }

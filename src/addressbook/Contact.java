@@ -25,8 +25,6 @@ public class Contact {
     private String email;
     private String skype;
 
-    private static final String FOLDER_FOR_CONTACT = "./data";
-
     private String currentInputField;
 
     public String getId() {
@@ -100,54 +98,7 @@ public class Contact {
         System.out.printf("Email: %s%n", this.email);
         System.out.printf("Skype: %s%n", this.skype);
         System.out.println("");
-    }
-
-    public void showContactFromFile(String contactFileName) throws FileNotFoundException, IOException {
-        File f = new File(FOLDER_FOR_CONTACT); // current directory
-
-        id = "";
-        nameFull = "";
-        skype = "";
-        email = "";
-        phone = "";
-
-        File[] files = f.listFiles();
-        for (File file : files) {
-            if (file.getName().equals(contactFileName)) {
-                FileInputStream fis = new FileInputStream(file);
-
-                int i = 0;
-                int cntLine = 0;
-
-                while (fis.available() > 0) {
-                    int read = fis.read();
-                    if (read == 10) {
-                        cntLine++;
-                    } else {
-                        switch (cntLine) {
-                            case 0:
-                                id = id + (char) read;
-                                break;
-                            case 1:
-                                nameFull = nameFull + (char) read;
-                                break;
-                            case 2:
-                                phone = phone + (char) read;
-                                break;
-                            case 3:
-                                email = email + (char) read;
-                                break;
-                            case 4:
-                                skype = skype + (char) read;
-                                break;
-                        }
-                    }
-                }
-                fis.close();
-                showContact();
-            }
-        }
-    }
+    }   
 
     public void showPromptInputContact() {
         if (currentInputField == null) {
@@ -170,8 +121,4 @@ public class Contact {
                 break;
         }
     }
-    
-    
-
-   
 }
