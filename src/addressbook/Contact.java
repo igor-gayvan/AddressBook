@@ -5,7 +5,6 @@
  */
 package addressbook;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,7 +18,7 @@ import java.util.Date;
  */
 public class Contact {
 
-    private long id;
+    private String id;
     private String nameFull;
     private String phone;
     private String email;
@@ -29,11 +28,11 @@ public class Contact {
 
     private String currentInputField;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -88,6 +87,69 @@ public class Contact {
         this.skype = skype;
     }
 
+    public void showPromptInputContactId() {
+        System.out.println("\nInput contact's id:");
+    }
+
+    public void showContact() {
+        System.out.println("Contact's info: ");
+        System.out.printf("ID: %s", this.id);
+        System.out.printf("Full name: %s", this.nameFull);
+        System.out.printf("Phone: %s", this.phone);
+        System.out.printf("Email: %s", this.email);
+        System.out.printf("Skype: %s", this.skype);
+        System.out.println("");
+    }
+
+    public void showContactFromFile(String contactFileName) throws FileNotFoundException, IOException {
+        File f = new File(FOLDER_FOR_CONTACT); // current directory
+
+        System.out.println("\nContact's list: ");
+        System.out.println("   Full name    ");
+
+        id = null;
+        nameFull = null;
+        skype = null;
+        email = null;
+        phone = null;
+
+        File[] files = f.listFiles();
+        for (File file : files) {
+            if (file.getName().equals(contactFileName)) {
+                FileInputStream fis = new FileInputStream(file);
+
+                int i = 0;
+                int cntLine = 0;
+
+                while (fis.available() > 0) {
+                    int read = fis.read();
+                    if (read == 10) {
+                        cntLine++;
+                    }
+
+                    switch (cntLine) {
+                        case 0:
+                            id = id + (char) read;
+                        case 1:
+                            nameFull = nameFull + (char) read;
+                            break;
+                        case 2:
+                            skype = skype + (char) read;
+                            break;
+                        case 3:
+                            email = email + (char) read;
+                            break;
+                        case 4:
+                            phone = phone + (char) read;
+                            break;
+                    }
+                }
+                fis.close();
+            }
+            showContact();
+        }
+    }
+
     public void showPromptInputContact() {
         if (currentInputField == null) {
             currentInputField = "nameFull";
@@ -133,13 +195,13 @@ public class Contact {
     }
 
     public void saveContact() {
-        id = (new Date()).getTime();
+        id = String.valueOf((new Date()).getTime());
 
         new File(FOLDER_FOR_CONTACT).mkdir();
-        String fileName = FOLDER_FOR_CONTACT + "/" + String.valueOf(id);
+        String fileName = FOLDER_FOR_CONTACT + "/" + id;
 
         try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
-            fos.write(String.valueOf(this.id).getBytes());
+            fos.write(this.id.getBytes());
             fos.write('\n');
             fos.write(this.nameFull.getBytes());
             fos.write('\n');
@@ -158,10 +220,10 @@ public class Contact {
     }
 
     public void showListContact() throws FileNotFoundException, IOException {
-
         File f = new File(FOLDER_FOR_CONTACT); // current directory
 
         System.out.println("\nContact's list: ");
+        System.out.println("   Full name    ");
 
         File[] files = f.listFiles();
         for (File file : files) {
@@ -187,9 +249,8 @@ public class Contact {
             }
 
             fis.close();
-            System.out.printf("Full name: %s", nameFull);
+            System.out.printf("%s", nameFull);
         }
-
         System.out.println();
     }
 }

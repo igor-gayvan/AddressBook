@@ -48,7 +48,7 @@ public class Console {
 
     /**
      *
-     * @param modeWorking ADD_CONTACT - добавление, CHOICE_MODE - главное меню
+     * @param modeWorking ADD_CONTACT - добавление, CHOICE_MODE - главное меню, SHOW_CONTACT - отображение данных о контакте
      *
      */
     public void setModeWorking(String modeWorking) {
@@ -68,6 +68,12 @@ public class Console {
             inputText = scanner.nextLine().trim();
 
             switch (modeWorking) {
+                case "SHOW_CONTACT": {
+                    for (ActiontListener addressBookListeners : AddressBookListeners) {
+                        addressBookListeners.showContactAction();
+                    }
+                    break;
+                }                
                 case "ADD_CONTACT": {
                     for (ActiontListener addressBookListeners : AddressBookListeners) {
                         addressBookListeners.addContactAction();
@@ -89,12 +95,13 @@ public class Console {
                         case "2":
                             setModeWorking("ADD_CONTACT");
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
-                                addressBookListeners.addShowContactAction();
+                                addressBookListeners.showPromptInputContactAction();
                             }
                             break;
                         case "3":
+                            setModeWorking("SHOW_CONTACT");
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
-                                addressBookListeners.showContactAction();
+                                addressBookListeners.showPromptInputContactIdAction();
                             }
                             break;
                         default:
