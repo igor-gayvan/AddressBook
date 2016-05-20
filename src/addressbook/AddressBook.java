@@ -5,7 +5,12 @@
  */
 package addressbook;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +20,8 @@ import java.util.logging.Logger;
  */
 public class AddressBook {
 
+    private static final String FOLDER_FOR_CONTACT = "./data";
+
     /**
      * @param args the command line arguments
      */
@@ -22,6 +29,7 @@ public class AddressBook {
         Console console = new Console(System.in);
 
         Contact contact = new Contact();
+        List<Contact> contactList = new ArrayList<>();
 
         console.addListener(new ActiontListener() {
             // Выход
@@ -53,7 +61,7 @@ public class AddressBook {
             @Override
             public void showListContactsAction() {
                 try {
-                    contact.showListContact();
+                    showListContact();
                 } catch (IOException ex) {
                     Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -69,8 +77,8 @@ public class AddressBook {
             @Override
             public void showContactAction() {
                 try {
-                    contact.showContactFromFile(console.getInputText());
-                     console.setModeWorking("CHOICE_MODE");
+                    showContactFromFile(console.getInputText());
+                    console.setModeWorking("CHOICE_MODE");
                 } catch (IOException ex) {
                     Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -80,4 +88,100 @@ public class AddressBook {
         console.working();
     }
 
+    public static void showContactFromFile(String contactFileName) throws FileNotFoundException, IOException {
+        File f = new File(FOLDER_FOR_CONTACT); // current directory
+
+        Contact contact = new Contact();
+
+        File[] files = f.listFiles();
+        for (File file : files) {
+            if (file.getName().equals(contactFileName)) {
+                FileInputStream fis = new FileInputStream(file);
+
+                int i = 0;
+                int cntLine = 0;
+                String curLine = "";
+
+                while (fis.available() > 0) {
+                    int read = fis.read();
+                    if (read == 10) {
+                        switch (cntLine) {
+                            case 0:
+                                contact.setId(curLine);
+                                break;
+                            case 1:
+                                contact.setNameFull(curLine);
+                                break;
+                            case 2:
+                                contact.setPhone(curLine);
+                                break;
+                            case 3:
+                                contact.setEmail(curLine);
+                                break;
+                            case 4:
+                                contact.setSkype(curLine);
+                                break;
+                        }
+
+                        curLine = "";
+                        cntLine++;
+                    } else {
+                        curLine = curLine + (char) read;
+                    }
+                }
+
+                fis.close();
+                contact.showContact();
+            }
+        }
+    }
+
+    public static void showListContact() throws FileNotFoundException, IOException {
+        Contact contact = new Contact();
+        File f = new File(FOLDER_FOR_CONTACT); // current directory
+
+        System.out.println("\nContact's list: ");
+        System.out.println("   Full name    ");
+
+        File[] files = f.listFiles();
+        for (File file : files) {
+            FileInputStream fis = new FileInputStream(file);
+
+            int i = 0;
+            int cntLine = 0;
+            String curLine = "";
+
+            while (fis.available() > 0) {
+                    int read = fis.read();
+                    if (read == 10) {
+                        switch (cntLine) {
+                            case 0:
+                                contact.setId(curLine);
+                                break;
+                            case 1:
+                                contact.setNameFull(curLine);
+                                break;
+                            case 2:
+                                contact.setPhone(curLine);
+                                break;
+                            case 3:
+                                contact.setEmail(curLine);
+                                break;
+                            case 4:
+                                contact.setSkype(curLine);
+                                break;
+                        }
+
+                        curLine = "";
+                        cntLine++;
+                    } else {
+                        curLine = curLine + (char) read;
+                    }
+                }
+
+            fis.close();
+            System.out.printf("%s%n", contact.getNameFull());
+        }
+        System.out.println();
+    }
 }
