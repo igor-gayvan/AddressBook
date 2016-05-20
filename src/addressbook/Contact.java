@@ -92,26 +92,23 @@ public class Contact {
     }
 
     public void showContact() {
-        System.out.println("Contact's info: ");
-        System.out.printf("ID: %s", this.id);
-        System.out.printf("Full name: %s", this.nameFull);
-        System.out.printf("Phone: %s", this.phone);
-        System.out.printf("Email: %s", this.email);
-        System.out.printf("Skype: %s", this.skype);
+        System.out.println("\nContact's info: ");
+        System.out.printf("ID: %s%n", this.id);
+        System.out.printf("Full name: %s%n", this.nameFull);
+        System.out.printf("Phone: %s%n", this.phone);
+        System.out.printf("Email: %s%n", this.email);
+        System.out.printf("Skype: %s%n", this.skype);
         System.out.println("");
     }
 
     public void showContactFromFile(String contactFileName) throws FileNotFoundException, IOException {
         File f = new File(FOLDER_FOR_CONTACT); // current directory
 
-        System.out.println("\nContact's list: ");
-        System.out.println("   Full name    ");
-
-        id = null;
-        nameFull = null;
-        skype = null;
-        email = null;
-        phone = null;
+        id = "";
+        nameFull = "";
+        skype = "";
+        email = "";
+        phone = "";
 
         File[] files = f.listFiles();
         for (File file : files) {
@@ -125,28 +122,29 @@ public class Contact {
                     int read = fis.read();
                     if (read == 10) {
                         cntLine++;
-                    }
-
-                    switch (cntLine) {
-                        case 0:
-                            id = id + (char) read;
-                        case 1:
-                            nameFull = nameFull + (char) read;
-                            break;
-                        case 2:
-                            skype = skype + (char) read;
-                            break;
-                        case 3:
-                            email = email + (char) read;
-                            break;
-                        case 4:
-                            phone = phone + (char) read;
-                            break;
+                    } else {
+                        switch (cntLine) {
+                            case 0:
+                                id = id + (char) read;
+                                break;
+                            case 1:
+                                nameFull = nameFull + (char) read;
+                                break;
+                            case 2:
+                                phone = phone + (char) read;
+                                break;
+                            case 3:
+                                email = email + (char) read;
+                                break;
+                            case 4:
+                                skype = skype + (char) read;
+                                break;
+                        }
                     }
                 }
                 fis.close();
+                showContact();
             }
-            showContact();
         }
     }
 

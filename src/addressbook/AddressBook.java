@@ -70,6 +70,7 @@ public class AddressBook {
             public void showContactAction() {
                 try {
                     contact.showContactFromFile(console.getInputText());
+                     console.setModeWorking("CHOICE_MODE");
                 } catch (IOException ex) {
                     Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
                 }
