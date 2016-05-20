@@ -19,5 +19,7 @@ public interface ActiontListener {
 
     public void showContactAction();
 
-    public void addShowContactAction();
+    public void showPromptInputContactAction();
+
+    public void showPromptInputContactIdAction();
 }

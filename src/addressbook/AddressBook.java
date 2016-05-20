@@ -5,6 +5,10 @@
  */
 package addressbook;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Igor Gayvan
@@ -20,16 +24,19 @@ public class AddressBook {
         Contact contact = new Contact();
 
         console.addListener(new ActiontListener() {
+            // Выход
             @Override
             public void exitAction() {
                 System.exit(0);
             }
 
+            // Показываем приглашения для ввода данных контакта
             @Override
-            public void addShowContactAction() {
+            public void showPromptInputContactAction() {
                 contact.showPromptInputContact();
             }
 
+            // Заполняем поля контакта
             @Override
             public void addContactAction() {
                 contact.inputContact(console.getInputText());
@@ -40,17 +47,33 @@ public class AddressBook {
                 } else {
                     contact.showPromptInputContact();
                 }
-
             }
 
+            // Показываем список контактов
             @Override
             public void showListContactsAction() {
-                contact.showListContact();
+                try {
+                    contact.showListContact();
+                } catch (IOException ex) {
+                    Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
+            // Показываем приглашения для ввода ID контакта
+            @Override
+            public void showPromptInputContactIdAction() {
+                contact.showPromptInputContactId();
+            }
+
+            // Показываем данные контатка
             @Override
             public void showContactAction() {
-                System.exit(0);
+                try {
+                    contact.showContactFromFile(console.getInputText());
+                     console.setModeWorking("CHOICE_MODE");
+                } catch (IOException ex) {
+                    Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
