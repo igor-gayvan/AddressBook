@@ -22,4 +22,6 @@ public interface ActiontListener {
     public void showPromptInputContactAction();
 
     public void showPromptInputContactIdAction();
+
+    public void refreshDataAction();
 }

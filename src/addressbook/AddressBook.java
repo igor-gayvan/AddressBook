@@ -6,6 +6,8 @@
 package addressbook;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,10 +20,15 @@ public class AddressBook {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Console console = new Console(System.in);
 
         Contact contact = new Contact();
+        List<Contact> contactList = new ArrayList<>();
+
+        DataSource ds = new DataSource();
+        ShowData showData = new ShowData();
+        ds.loadContactFromFiles(contactList);
 
         console.addListener(new ActiontListener() {
             // Выход
@@ -39,7 +46,7 @@ public class AddressBook {
             // Заполняем поля контакта
             @Override
             public void addContactAction() {
-                contact.inputContact(console.getInputText());
+                ShowData.showAddContact(ds, contactList, contact, console.getInputText());
 
                 if (contact.getCurrentInputField() == null) {
                     console.setModeWorking("CHOICE_MODE");
@@ -52,32 +59,33 @@ public class AddressBook {
             // Показываем список контактов
             @Override
             public void showListContactsAction() {
-                try {
-                    contact.showListContact();
-                } catch (IOException ex) {
-                    Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                showData.showListContact(contactList);
             }
 
             // Показываем приглашения для ввода ID контакта
             @Override
             public void showPromptInputContactIdAction() {
-                contact.showPromptInputContactId();
+                showData.showPromptInputContactId();
             }
 
             // Показываем данные контатка
             @Override
             public void showContactAction() {
+                showData.showContactInfo(contactList, console.getInputText());
+                console.setModeWorking("CHOICE_MODE");
+            }
+
+            @Override
+            public void refreshDataAction() {
                 try {
-                    contact.showContactFromFile(console.getInputText());
-                     console.setModeWorking("CHOICE_MODE");
+                    ds.loadContactFromFiles(contactList);
                 } catch (IOException ex) {
                     Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                console.setModeWorking("CHOICE_MODE");
             }
         });
 
         console.working();
     }
-
 }
