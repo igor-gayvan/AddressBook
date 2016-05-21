@@ -88,7 +88,20 @@ public class AddressBook {
             // Сортируем список контактов по телефону и показываем его
             @Override
             public void sortByPhoneAction() {
-                showData.showListContact(contactList,"phone");
+                showData.showListContact(contactList, "phone");
+                console.setModeWorking("CHOICE_MODE");
+            }
+
+            // Сортируем список контактов по указанному полю и показываем его
+            @Override
+            public void sortByAnyFieldAction() {
+                ShowData.showPromptFieldForSort();
+            }
+
+            @Override
+            public void sortByAnyField() {
+                ShowData.showListContact(contactList, console.getInputText().toLowerCase());
+
                 console.setModeWorking("CHOICE_MODE");
             }
 

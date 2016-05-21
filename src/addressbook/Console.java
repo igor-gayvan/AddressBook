@@ -35,7 +35,7 @@ public class Console {
     }
 
     public String getInputText() {
-        return inputText;
+        return inputText.trim();
     }
 
     public void setInputText(String inputText) {
@@ -64,6 +64,7 @@ public class Console {
                 System.out.println("3 - show information about contact");
                 System.out.println("5 - refresh");
                 System.out.println("7 - sort by phone");
+                System.out.println("8 - sort by any field");
                 System.out.println("0 - exit");
                 System.out.print("Your choice? ");
             }
@@ -80,6 +81,12 @@ public class Console {
                 case "ADD_CONTACT": {
                     for (ActiontListener addressBookListeners : AddressBookListeners) {
                         addressBookListeners.addContactAction();
+                    }
+                    break;
+                }
+                case "SORT_BY_ANY_FIELD": {
+                    for (ActiontListener addressBookListeners : AddressBookListeners) {
+                        addressBookListeners.sortByAnyField();
                     }
                     break;
                 }
@@ -113,12 +120,19 @@ public class Console {
                                 addressBookListeners.refreshDataAction();
                             }
                             break;
-                            case "7":
+                        case "7":
                             setModeWorking("SORT_BY_PHONE");
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
                                 addressBookListeners.sortByPhoneAction();
                             }
                             break;
+                        case "8":
+                            setModeWorking("SORT_BY_ANY_FIELD");
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.sortByAnyFieldAction();
+                            }
+                            break;
+
                         default:
                             System.out.println("Make your choice");
                     }

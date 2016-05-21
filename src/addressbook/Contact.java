@@ -18,7 +18,7 @@ public class Contact implements Comparable<Contact> {
     private String skype;
 
     private String compareField;
-    private static byte sortAsc = -1;
+    private static byte sortAsc = 1;
 
     private String currentInputField;
 
@@ -136,5 +136,36 @@ public class Contact implements Comparable<Contact> {
     @Override
     public int compareTo(Contact contact) {
         return this.getPhone().compareTo(contact.getPhone());
+    }
+
+    public static int compareTo(Contact a, Contact b, String sortBy) {
+        int resultCompare = 0;
+        byte curSortAsc = Contact.getSortAsc();
+
+        switch (sortBy) {
+            case "nameFull": {
+                resultCompare = a.getNameFull().compareTo(b.getNameFull());
+                break;
+            }
+            case "phone": {
+                resultCompare = a.getPhone().compareTo(b.getPhone());
+                break;
+            }
+            case "id": {
+                resultCompare = a.getId().compareTo(b.getId());
+                break;
+            }
+            case "skype": {
+                resultCompare = a.getSkype().compareTo(b.getSkype());
+                break;
+            }
+            case "email": {
+                resultCompare = a.getEmail().compareTo(b.getEmail());
+                break;
+            }
+        }
+        Contact.setSortAsc((byte) (Contact.getSortAsc() * (-1)));
+
+        return curSortAsc * resultCompare;
     }
 }
