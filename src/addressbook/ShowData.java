@@ -39,7 +39,6 @@ public class ShowData {
         });
 
         System.out.printf("\nSort contacts by phone (%s)", Contact.getSortAsc() == 1 ? "ascending" : "descending");
-
         showListContact(contactList);
     }
 
