@@ -63,6 +63,7 @@ public class Console {
                 System.out.println("2 - add new contact");
                 System.out.println("3 - show information about contact");
                 System.out.println("5 - refresh");
+                System.out.println("7 - sort by phone");
                 System.out.println("0 - exit");
                 System.out.print("Your choice? ");
             }
@@ -110,6 +111,12 @@ public class Console {
                             setModeWorking("REFRESH");
                             for (ActiontListener addressBookListeners : AddressBookListeners) {
                                 addressBookListeners.refreshDataAction();
+                            }
+                            break;
+                            case "7":
+                            setModeWorking("SORT_BY_PHONE");
+                            for (ActiontListener addressBookListeners : AddressBookListeners) {
+                                addressBookListeners.sortByPhoneAction();
                             }
                             break;
                         default:

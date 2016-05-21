@@ -84,6 +84,14 @@ public class AddressBook {
                 }
                 console.setModeWorking("CHOICE_MODE");
             }
+
+            // Сортируем список контактов по телефону и показываем его
+            @Override
+            public void sortByPhoneAction() {
+                showData.showListContact(contactList,"phone");
+                console.setModeWorking("CHOICE_MODE");
+            }
+
         });
 
         console.working();
