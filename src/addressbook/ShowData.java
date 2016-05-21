@@ -28,15 +28,8 @@ public class ShowData {
     }
 
     public static void showListContact(List<Contact> contactList, String sortBy) {
-//        Collections.sort(contactList, new Comparator<Contact>() {
-//            @Override
-//            public int compare(Contact a, Contact b) {
+        Contact.setCompareField(sortBy);
 
-//
-//                return Contact.getSortAsc() * a.getPhone().compareTo(b.getPhone());
-//            }
-//        });
-//        contactList.sort((a, b) -> Contact.compareTo(a, b, sortBy));
         Collections.sort(contactList);
         System.out.printf("\nSort contacts by %s (%s)", sortBy, Contact.getSortAsc() == 1 ? "ascending" : "descending");
         showListContact(contactList);

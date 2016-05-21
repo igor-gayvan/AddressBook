@@ -17,8 +17,8 @@ public class Contact implements Comparable<Contact> {
     private String email;
     private String skype;
 
-    private String compareField;
-    private static byte sortAsc = 1;
+    private static String compareField;
+    private static int sortAsc = 1;
 
     private String currentInputField;
 
@@ -37,15 +37,20 @@ public class Contact implements Comparable<Contact> {
         this.skype = skype;
     }
 
-    public String getCompareField() {
+    public static String getCompareField() {
         return compareField;
     }
 
-    public void setCompareField(String compareField) {
-        this.compareField = compareField;
+    public static void setCompareField(String compareField) {
+        if ((Contact.compareField != null) && Contact.compareField.equals(compareField)) {
+            Contact.sortAsc = Contact.sortAsc * -1;
+        } else {
+            Contact.sortAsc = 1;
+        }
+        Contact.compareField = compareField;
     }
 
-    public static byte getSortAsc() {
+    public static int getSortAsc() {
         return sortAsc;
     }
 
@@ -135,36 +140,31 @@ public class Contact implements Comparable<Contact> {
 
     @Override
     public int compareTo(Contact contact) {
-        return this.getPhone().compareTo(contact.getPhone());
-    }
-
-    public static int compareTo(Contact a, Contact b, String sortBy) {
         int resultCompare = 0;
-        byte curSortAsc = Contact.getSortAsc();
+        int curSortAsc = Contact.getSortAsc();
 
-        switch (sortBy) {
+        switch (Contact.getCompareField()) {
             case "nameFull": {
-                resultCompare = a.getNameFull().compareTo(b.getNameFull());
+                resultCompare = this.getNameFull().compareTo(contact.getNameFull());
                 break;
             }
             case "phone": {
-                resultCompare = a.getPhone().compareTo(b.getPhone());
+                resultCompare = this.getPhone().compareTo(contact.getPhone());
                 break;
             }
             case "id": {
-                resultCompare = a.getId().compareTo(b.getId());
+                resultCompare = this.getId().compareTo(contact.getId());
                 break;
             }
             case "skype": {
-                resultCompare = a.getSkype().compareTo(b.getSkype());
+                resultCompare = this.getSkype().compareTo(contact.getSkype());
                 break;
             }
             case "email": {
-                resultCompare = a.getEmail().compareTo(b.getEmail());
+                resultCompare = this.getEmail().compareTo(contact.getEmail());
                 break;
             }
         }
-        Contact.setSortAsc((byte) (Contact.getSortAsc() * (-1)));
 
         return curSortAsc * resultCompare;
     }
