@@ -22,6 +22,21 @@ public class Contact implements Comparable<Contact> {
 
     private String currentInputField;
 
+    public Contact() {
+
+    }
+
+    public Contact(String id) {
+        this.id = id;
+    }
+
+    public Contact(String nameFull, String phone, String email, String skype) {
+        this.nameFull = nameFull;
+        this.phone = phone;
+        this.email = email;
+        this.skype = skype;
+    }
+
     public String getCompareField() {
         return compareField;
     }
@@ -84,21 +99,6 @@ public class Contact implements Comparable<Contact> {
 
     public void setCurrentInputField(String currentInputField) {
         this.currentInputField = currentInputField;
-    }
-
-    public Contact() {
-
-    }
-
-    public Contact(String id) {
-        this.id = id;
-    }
-
-    public Contact(String nameFull, String phone, String email, String skype) {
-        this.nameFull = nameFull;
-        this.phone = phone;
-        this.email = email;
-        this.skype = skype;
     }
 
     public void showContact() {

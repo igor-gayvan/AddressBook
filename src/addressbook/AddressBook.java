@@ -30,17 +30,11 @@ public class AddressBook {
         ShowData showData = new ShowData();
         ds.loadContactFromFiles(contactList);
 
-        console.addListener(new ActiontListener() {
+        console.addActionListener(new ActionListener() {
             // Выход
             @Override
             public void exitAction() {
                 System.exit(0);
-            }
-
-            // Показываем приглашения для ввода данных контакта
-            @Override
-            public void showPromptInputContactAction() {
-                contact.showPromptInputContact();
             }
 
             // Заполняем поля контакта
@@ -54,6 +48,24 @@ public class AddressBook {
                 } else {
                     contact.showPromptInputContact();
                 }
+            }
+
+            @Override
+            public void refreshDataAction() {
+                try {
+                    ds.loadContactFromFiles(contactList);
+                } catch (IOException ex) {
+                    Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                console.setModeWorking("CHOICE_MODE");
+            }
+        });
+        console.addShowDataListener(new ShowDataListener() {
+
+            // Показываем приглашения для ввода данных контакта
+            @Override
+            public void showPromptInputContactAction() {
+                contact.showPromptInputContact();
             }
 
             // Показываем список контактов
@@ -74,16 +86,8 @@ public class AddressBook {
                 showData.showContactInfo(contactList, console.getInputText());
                 console.setModeWorking("CHOICE_MODE");
             }
-
-            @Override
-            public void refreshDataAction() {
-                try {
-                    ds.loadContactFromFiles(contactList);
-                } catch (IOException ex) {
-                    Logger.getLogger(AddressBook.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                console.setModeWorking("CHOICE_MODE");
-            }
+        });
+        console.addSortActionListener(new SortActionListener() {
 
             // Сортируем список контактов по телефону и показываем его
             @Override
