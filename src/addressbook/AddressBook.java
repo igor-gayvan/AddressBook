@@ -104,7 +104,6 @@ public class AddressBook {
 
                 console.setModeWorking("CHOICE_MODE");
             }
-
         });
 
         console.working();
