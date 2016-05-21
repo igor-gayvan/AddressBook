@@ -6,7 +6,6 @@
 package addressbook;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -14,6 +13,7 @@ import java.util.List;
  * @author Igor Gayvan
  */
 public class ShowData {
+
     public static void showListContact(List<Contact> contactList) {
         System.out.println("\nContact's list: ");
         System.out.println("---------------------------------------------------------------------------------------------------");
@@ -28,15 +28,9 @@ public class ShowData {
     }
 
     public static void showListContact(List<Contact> contactList, String sortBy) {
-//        Collections.sort(contactList, new Comparator<Contact>() {
-//            @Override
-//            public int compare(Contact a, Contact b) {
+        Contact.setCompareField(sortBy);
 
-//
-//                return Contact.getSortAsc() * a.getPhone().compareTo(b.getPhone());
-//            }
-//        });
-        contactList.sort((a, b) -> Contact.compareTo(a, b, sortBy));
+        Collections.sort(contactList);
         System.out.printf("\nSort contacts by %s (%s)", sortBy, Contact.getSortAsc() == 1 ? "ascending" : "descending");
         showListContact(contactList);
     }
@@ -46,11 +40,22 @@ public class ShowData {
         System.out.println(contactList.indexOf(cn));
 
         for (Contact contact : contactList) {
-            if (contactId == null || (contactId != null && contact.getId().equals(contactId))) {
+            if (contactId == null) {
+                contact.showContact();
+            } else if (contact.getId().equals(contactId)) {
                 contact.showContact();
                 break;
             }
         }
+    }
+
+    /**
+     * Overloading for showing all contacts.
+     *
+     * @param contactList list of contacts that showing.
+     */
+    public void showContactInfo(List<Contact> contactList) {
+        showContactInfo(contactList, null);
     }
 
     public static void showAddContact(DataSource ds, List<Contact> contactList, Contact contact, String currentFieldValue) {
