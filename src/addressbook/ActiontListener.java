@@ -26,4 +26,8 @@ public interface ActiontListener {
     public void refreshDataAction();
 
     public void sortByPhoneAction();
+
+    public void sortByAnyFieldAction();
+
+    public void sortByAnyField();
 }

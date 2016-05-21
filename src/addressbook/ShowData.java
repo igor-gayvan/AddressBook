@@ -14,11 +14,10 @@ import java.util.List;
  * @author Igor Gayvan
  */
 public class ShowData {
-
-    public void showListContact(List<Contact> contactList) {
+    public static void showListContact(List<Contact> contactList) {
         System.out.println("\nContact's list: ");
         System.out.println("---------------------------------------------------------------------------------------------------");
-        System.out.printf("|%14s|%20s|%20s|%20s|%20s|%n", "Id", "Full name", "Phone", "Email", "Skype");
+        System.out.printf("|%14s|%20s|%20s|%20s|%20s|%n", "id", "nameFull", "phone", "email", "skype");
         System.out.println("---------------------------------------------------------------------------------------------------");
         for (Contact contact : contactList) {
             System.out.printf("|%14s|%-20s|%-20s|%-20s|%-20s|%n", contact.getId(), contact.getNameFull(), contact.getPhone(), contact.getEmail(), contact.getSkype());
@@ -28,17 +27,17 @@ public class ShowData {
         System.out.println("");
     }
 
-    public void showListContact(List<Contact> contactList, String sortBy) {
-        Collections.sort(contactList, new Comparator<Contact>() {
-            @Override
-            public int compare(Contact a, Contact b) {
-                Contact.setSortAsc((byte) (Contact.getSortAsc() * (-1)));
+    public static void showListContact(List<Contact> contactList, String sortBy) {
+//        Collections.sort(contactList, new Comparator<Contact>() {
+//            @Override
+//            public int compare(Contact a, Contact b) {
 
-                return Contact.getSortAsc() * a.getPhone().compareTo(b.getPhone());
-            }
-        });
-
-        System.out.printf("\nSort contacts by phone (%s)", Contact.getSortAsc() == 1 ? "ascending" : "descending");
+//
+//                return Contact.getSortAsc() * a.getPhone().compareTo(b.getPhone());
+//            }
+//        });
+        contactList.sort((a, b) -> Contact.compareTo(a, b, sortBy));
+        System.out.printf("\nSort contacts by %s (%s)", sortBy, Contact.getSortAsc() == 1 ? "ascending" : "descending");
         showListContact(contactList);
     }
 
@@ -78,6 +77,10 @@ public class ShowData {
 
     public void showPromptInputContactId() {
         System.out.print("\nInput contact's id: ");
+    }
+
+    public static void showPromptFieldForSort() {
+        System.out.print("\nInput field for sort: ");
     }
 
 }
