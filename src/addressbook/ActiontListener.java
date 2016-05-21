@@ -24,4 +24,6 @@ public interface ActiontListener {
     public void showPromptInputContactIdAction();
 
     public void refreshDataAction();
+
+    public void sortByPhoneAction();
 }

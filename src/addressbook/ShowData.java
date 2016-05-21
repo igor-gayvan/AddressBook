@@ -5,6 +5,8 @@
  */
 package addressbook;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -24,6 +26,20 @@ public class ShowData {
 
         System.out.println("---------------------------------------------------------------------------------------------------");
         System.out.println("");
+    }
+
+    public void showListContact(List<Contact> contactList, String sortBy) {
+        Collections.sort(contactList, new Comparator<Contact>() {
+            @Override
+            public int compare(Contact a, Contact b) {
+                Contact.setSortAsc((byte) (Contact.getSortAsc() * (-1)));
+
+                return Contact.getSortAsc() * a.getPhone().compareTo(b.getPhone());
+            }
+        });
+
+        System.out.printf("\nSort contacts by phone (%s)", Contact.getSortAsc() == 1 ? "ascending" : "descending");
+        showListContact(contactList);
     }
 
     public void showContactInfo(List<Contact> contactList, String contactId) {

@@ -9,7 +9,7 @@ package addressbook;
  *
  * @author Igor Gayvan
  */
-public class Contact {
+public class Contact implements Comparable<Contact> {
 
     private String id;
     private String nameFull;
@@ -17,7 +17,26 @@ public class Contact {
     private String email;
     private String skype;
 
+    private String compareField;
+    private static byte sortAsc = -1;
+
     private String currentInputField;
+
+    public String getCompareField() {
+        return compareField;
+    }
+
+    public void setCompareField(String compareField) {
+        this.compareField = compareField;
+    }
+
+    public static byte getSortAsc() {
+        return sortAsc;
+    }
+
+    public static void setSortAsc(byte sortAsc) {
+        Contact.sortAsc = sortAsc;
+    }
 
     public String getId() {
         return id;
@@ -112,5 +131,10 @@ public class Contact {
                 System.out.print("Input skype:");
                 break;
         }
+    }
+
+    @Override
+    public int compareTo(Contact contact) {
+        return this.getPhone().compareTo(contact.getPhone());
     }
 }
